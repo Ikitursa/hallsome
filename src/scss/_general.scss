@@ -1,6 +1,24 @@
-
 body{
   font-family: 'Poppins', sans-serif;
+}
+
+.main-menu{
+  display: flex;
+  justify-content: center;
+
+  a{
+    padding:  12px;
+    color: $darkGrey;
+    transition: color 0.3s;
+    font-size: 20px;
+
+    &.exact-active{
+      color: $pinkLite
+    }
+    &:hover{
+      color: $pink;
+    }
+  }
 }
 
 h1, h2, h3{
