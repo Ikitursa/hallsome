@@ -1,36 +1,98 @@
-body{
+body {
   font-family: 'Poppins', sans-serif;
+  background-color: $lightGrey;
 }
 
-.main-menu{
+.main-menu {
   display: flex;
   justify-content: center;
 
-  a{
-    padding:  12px;
+  a {
+    padding: 12px;
     color: $darkGrey;
     transition: color 0.3s;
     font-size: 20px;
 
-    &.exact-active{
+    &.exact-active {
       color: $pinkLite
     }
-    &:hover{
+
+    &:hover {
       color: $pink;
     }
   }
 }
 
-h1, h2, h3{
+h1, h2, h3 {
   font-family: 'Comfortaa', cursive;
   font-weight: 700;
 }
-
 
 .centered-popup {
   position: fixed;
   top: 50%;
   left: 50%;
-
   transform: translate(-50%, -50%);
+}
+
+.card {
+  background-color: white;
+  border-radius: 4px;
+  padding: 16px;
+
+  .card-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+}
+
+.items-list-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  padding: 5px 0;
+
+  &:not(:last-child) {
+    border-bottom: 1px dashed $grey;
+  }
+
+  .list-tag {
+    color: white;
+    font-size: 10px;
+    background-color: $pink;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    margin-left: 8px;
+
+    border-radius: 3px;
+  }
+
+  .list-button {
+    color: $darkGrey;
+  }
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.button-rounded {
+  border-radius: 4px;
+}
+
+.button-add-new {
+  padding: 6px 16px;
+  color: white;
+  background-color: $darkGrey;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    width: 680px;
+    margin: auto;
+  }
 }
