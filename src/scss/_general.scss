@@ -37,7 +37,6 @@ h1, h2, h3 {
 
 .card {
   background-color: white;
-  border-radius: 4px;
   padding: 16px;
 
   .card-header {
@@ -94,5 +93,8 @@ button {
   .container {
     width: 680px;
     margin: auto;
+  }
+  .card {
+    border-radius: 4px;
   }
 }
