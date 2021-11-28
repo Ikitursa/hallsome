@@ -1,7 +1,7 @@
 <template>
   <div class="items-list-row halls-row">
     <div class="name hall-name">{{hall.title}}
-      <div class="list-tag">{{ hall.manager }}</div>
+      <Tag :label="hall.manager"/>
     </div>
     <div class="list-actions">
       <button class="list-button">Edit</button>
@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import Tag from "../layout/Tag";
 export default {
   name: "HallsRow",
 
@@ -27,7 +28,7 @@ export default {
   created() {
   },
 
-  components: {},
+  components: {Tag},
 
   computed: {},
 

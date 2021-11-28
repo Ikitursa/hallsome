@@ -1,7 +1,7 @@
 <template>
   <div class="items-list-row personnel-row">
     <div class="name personnel-name">{{person.name}} {{person.lastName}}
-      <div v-if="person.manager" class="list-tag">Manager</div>
+      <Tag v-if="person.manager" :label="tagLabel"/>
     </div>
     <div class="list-actions">
       <button class="list-button">Edit</button>
@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import Tag from "../layout/Tag";
 export default {
   name: "PersonnelRow",
 
@@ -22,13 +23,15 @@ export default {
   },
 
   data: function () {
-    return {}
+    return {
+      tagLabel:'Manager'
+    }
   },
 
   created() {
   },
 
-  components: {},
+  components: {Tag},
 
   computed: {},
 
