@@ -2,7 +2,7 @@
   <h1>Halls</h1>
   <div class="container halls">
 
-    <div class="card">
+    <div class="card list-card">
 
       <div class="card-header">
         <button class="button-rounded button-add-new">Add new</button>

@@ -1,5 +1,5 @@
 <template>
-  <div class="upcoming-reservation-card" :class="{'high-priority-reservation': reservation.highPriorityGuest}">
+  <div class="card upcoming-reservation-card" :class="{'high-priority-reservation': reservation.highPriorityGuest}">
     <div class="reservation-info">
       <div class="upcoming-reservation-name">{{ reservation.guest }} ({{reservation.guestCount}})</div>
       <div class="upcoming-reservation-date">{{ reservation.date }}</div>

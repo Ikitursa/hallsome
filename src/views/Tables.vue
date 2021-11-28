@@ -2,7 +2,7 @@
 <h1>Tables</h1>
   <div class="container tables">
 
-    <div class="card">
+    <div class="card list-card">
 
       <div class="card-header">
         <button class="button-rounded button-add-new">Add new</button>

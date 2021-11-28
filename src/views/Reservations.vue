@@ -13,7 +13,7 @@
 
     <h3 class="reservations-header">Past reservations</h3>
 
-    <div class="card">
+    <div class="card list-card">
       <div class="items-list past-reservations-list">
 
         <ReservationRow v-for="reservation in reservations" key:="reservation.id" :reservation="reservation"/>
