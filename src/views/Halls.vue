@@ -19,6 +19,8 @@
 <script>
 import HallsRow from "../components/halls/HallsRow";
 import axios from "axios";
+import {firebaseObjectToList} from "../helpers/helpers";
+
 export default {
   name: "Halls",
   components: {HallsRow},
@@ -31,19 +33,11 @@ export default {
     }
 
   },
-  methods:{
+  methods: {
     fetchHalls() {
       const url = 'https://hallsome-44d13-default-rtdb.europe-west1.firebasedatabase.app/halls.json'
       axios.get(url).then(({data, status}) => {
-            const keys = Object.keys(data)
-
-            this.halls = keys.map(key => {
-
-              return {
-                ...data[key],
-                id: key
-              }
-            })
+            this.halls = firebaseObjectToList(data)
           }
       ).catch(error => {
         console.log(error)

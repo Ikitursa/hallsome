@@ -20,6 +20,7 @@
 <script>
 import axios from 'axios'
 import PersonnelRow from "../components/personnel/PersonnelRow"
+import {firebaseObjectToList} from "../helpers/helpers";
 
 export default {
   name: "Personnel",
@@ -37,18 +38,8 @@ export default {
     fetchPersonnel() {
       const url = 'https://hallsome-44d13-default-rtdb.europe-west1.firebasedatabase.app/personnel.json'
       axios.get(url).then(({data, status}) => {
-            const keys = Object.keys(data)
 
-            this.personnel = keys.map(key => {
-              // const dataValueAtKey = data[key]
-              // dataValueAtKey.id = key
-              // return dataValueAtKey
-
-              return {
-                ...data[key],
-                id: key
-              }
-            })
+            this.personnel = firebaseObjectToList(data)
           }
       ).catch(error => {
         console.log(error)
