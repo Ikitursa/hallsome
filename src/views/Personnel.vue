@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     fetchPersonnel() {
-      const url = 'https://hallsome-44d13-default-rtdb.europe-west1.firebasedatabase.app/personnel.json'
+      const url = process.env.VUE_APP_BASE_URL + '/personnel.json'
       axios.get(url).then(({data, status}) => {
 
             this.personnel = firebaseObjectToList(data)

@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     fetchHalls() {
-      const url = 'https://hallsome-44d13-default-rtdb.europe-west1.firebasedatabase.app/halls.json'
+      const url = process.env.VUE_APP_BASE_URL + '/halls.json'
       axios.get(url).then(({data, status}) => {
             this.halls = firebaseObjectToList(data)
           }
