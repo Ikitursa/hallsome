@@ -9,47 +9,7 @@
       </div>
 
       <div class="items-list personnel-list">
-
-        <div class="items-list-row personnel-row">
-          <div class="personnel-name">John Doe
-            <div class="list-tag">Manager</div>
-          </div>
-          <div class="list-actions">
-            <button class="list-button">Edit</button>
-            <button class="list-button">Delete</button>
-          </div>
-        </div>
-
-<!--        <div class="items-list-row personnel-row">
-          <div class="personnel-name">John Doe
-            <div class="list-tag">Manager</div>
-          </div>
-          <div class="list-actions">
-            <button class="list-button">Edit</button>
-            <button class="list-button">Delete</button>
-          </div>
-        </div>-->
-
-        <div class="items-list-row personnel-row">
-          <div class="personnel-name">John Doe
-            <div class="list-tag">Manager</div>
-          </div>
-          <div class="list-actions">
-            <button class="list-button">Edit</button>
-            <button class="list-button">Delete</button>
-          </div>
-        </div>
-
-        <div class="items-list-row personnel-row">
-          <div class="personnel-name">John Doe
-            <div class="list-tag">Manager</div>
-          </div>
-          <div class="list-actions">
-            <button class="list-button">Edit</button>
-            <button class="list-button">Delete</button>
-          </div>
-        </div>
-
+        <PersonnelRow v-for="person in personnel" key:="person.id" :person="person"/>
       </div>
 
     </div>
@@ -58,11 +18,43 @@
 </template>
 
 <script>
+import axios from 'axios'
+import PersonnelRow from "../components/personnel/PersonnelRow"
+
 export default {
-  name: "Personnel"
+  name: "Personnel",
+  components: {PersonnelRow},
+  created() {
+    this.fetchPersonnel()
+  },
+  data: function () {
+    return {
+      personnel: null,
+    }
+
+  },
+  methods: {
+    fetchPersonnel() {
+      const url = 'https://hallsome-44d13-default-rtdb.europe-west1.firebasedatabase.app/personnel.json'
+      axios.get(url).then(({data, status}) => {
+            const keys = Object.keys(data)
+
+            this.personnel = keys.map(key => {
+              // const dataValueAtKey = data[key]
+              // dataValueAtKey.id = key
+              // return dataValueAtKey
+
+              return {
+                ...data[key],
+                id: key
+              }
+            })
+          }
+      ).catch(error => {
+        console.log(error)
+      })
+
+    }
+  }
 }
 </script>
-
-<style scoped>
-
-</style>
