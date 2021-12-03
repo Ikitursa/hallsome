@@ -1,6 +1,12 @@
 <template>
   <MainMenu/>
   <router-view/>
+  <notifications
+      group="notifications"
+      position="bottom right"
+      :max="3"
+      :speed="500"
+  />
 </template>
 
 
