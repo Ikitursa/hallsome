@@ -14,7 +14,7 @@
 import Tag from "../layout/Tag";
 export default {
   name: "PersonnelRow",
-  emits: ['emit-edit-user'],
+  emits: ['editPerson','deletePerson'],
   props: {
     person:{
       required: true,
@@ -37,10 +37,10 @@ export default {
 
   methods: {
     emitEditPerson() {
-      this.$emit('emitEditPerson', this.person)
+      this.$emit('editPerson', this.person)
     },
     emitDeletePerson() {
-      this.$emit('emitDeletePerson', this.person.id)
+      this.$emit('deletePerson', this.person.id)
     }
   }
 }

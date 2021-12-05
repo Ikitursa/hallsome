@@ -5,72 +5,71 @@
     <div class="card list-card">
 
       <div class="card-header">
-        <button class="button-rounded button-add-new" @click="createPerson">Add new</button>
+        <button class="button-rounded button-add-new" @click="handleCreatePerson">Add new</button>
       </div>
-
       <div class="items-list personnel-list">
-        <PersonnelRow v-for="person in personnel" key:="person.id"
-                      :person="person"
-                      @emitEditPerson="handleEditPerson"
-                      @emitDeletePerson="handleDeletePerson"/>
+        <PersonnelRow
+            v-for="person in personnel" :key="person.id"
+            :person="person"
+            @editPerson="handleEditPerson"
+            @deletePerson="handleDeletePerson"/>
       </div>
-
     </div>
   </div>
-  <PersonnelCreateEdit
-      v-if="createEditVisible" :person="currentPerson"
-      @closeCreateEdit="createEditVisible = false"
-      @reloadData="fetchPersonnel()"
+  <PersonnelCreateEditModal
+      v-if="createEditVisible" :person="personToEdit"
+      @close="createEditVisible = false"
+      @refresh="fetchPersonnel"
   />
 </template>
 
 <script>
-import axios from 'axios'
 import PersonnelRow from "../components/personnel/PersonnelRow"
-import {firebaseObjectToList} from "../helpers/helpers";
-import {notify} from "@kyvg/vue3-notification";
-import PersonnelCreateEdit from "../components/personnel/PersonnelCreateEdit";
+import {personnelEnums} from "../enums/EntityEnums";
+import PersonnelCreateEditModal from "../components/personnel/PersonnelCreateEditModal";
 
 export default {
   name: "Personnel",
-  components: {PersonnelCreateEdit, PersonnelRow},
+  components: {PersonnelCreateEditModal, PersonnelRow},
   created() {
-    this.fetchPersonnel()
+    if(!this.personnel){
+      this.fetchPersonnel()
+    }
   },
   data: function () {
     return {
-      personnel: null,
-      currentPerson: null,
+      personToEdit: null,
       createEditVisible: false,
       //for enabling the delete modal later
       deleteVisible: false
     }
 
   },
+  computed: {
+    personnel() {
+      return this.$store.getters.getPersonnel
+    }
+  },
   methods: {
     fetchPersonnel() {
-      const url = process.env.VUE_APP_BASE_URL + '/personnel.json'
-      axios.get(url).then(({data, status}) => {
-
-            this.personnel = firebaseObjectToList(data)
-          }
-      ).catch(error => {
-        console.log(error)
-      })
+      this.$store.dispatch('fetchItems', personnelEnums)
     },
+
     handleEditPerson(person) {
-      console.log('person?', person)
-      this.currentPerson = person
+     //edit person
+      this.personToEdit = person
       this.createEditVisible = true
     },
+
     handleDeletePerson(personId) {
       //deletes person
-      this.currentPerson = personId
+      this.personToEdit = personId
       this.deleteVisible = true
     },
-    createPerson() {
-      //update person
-      this.currentPerson = null
+
+    handleCreatePerson() {
+      //create person
+      this.personToEdit = null
       this.createEditVisible = true
     }
   }

@@ -56,6 +56,11 @@
     .button-submit{
       background-color: $pink;
       color: white;
+      &:disabled{
+        background-color: $pinkLite;
+        opacity: 0.8;
+        cursor: default;
+      }
     }
   }
 }
