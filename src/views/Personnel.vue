@@ -17,8 +17,16 @@
     </div>
   </div>
   <PersonnelCreateEditModal
-      v-if="createEditVisible" :person="personToEdit"
-      @close="createEditVisible = false"
+      v-if="createEditModalVisible"
+      :person="personToEdit"
+      @close="createEditModalVisible = false"
+      @refresh="fetchPersonnel"
+  />
+  <DeleteModal
+      v-if="deleteModalVisible"
+      :endpoint="personnelEnums.EDIT"
+      :itemToDelete="personToEdit"
+      @close="deleteModalVisible = false"
       @refresh="fetchPersonnel"
   />
 </template>
@@ -27,21 +35,22 @@
 import PersonnelRow from "../components/personnel/PersonnelRow"
 import {personnelEnums} from "../enums/EntityEnums";
 import PersonnelCreateEditModal from "../components/personnel/PersonnelCreateEditModal";
+import DeleteModal from "../components/layout/DeleteModal";
 
 export default {
   name: "Personnel",
-  components: {PersonnelCreateEditModal, PersonnelRow},
+  components: {PersonnelCreateEditModal, PersonnelRow, DeleteModal},
   created() {
-    if(!this.personnel){
+    if (!this.personnel) {
       this.fetchPersonnel()
     }
   },
   data: function () {
     return {
       personToEdit: null,
-      createEditVisible: false,
-      //for enabling the delete modal later
-      deleteVisible: false
+      createEditModalVisible: false,
+      deleteModalVisible: false,
+      personnelEnums
     }
 
   },
@@ -56,21 +65,23 @@ export default {
     },
 
     handleEditPerson(person) {
-     //edit person
+      //edit person
+      //person= { id: 'personId, name: 'name', lastName: 'lastName', manager: Boolean }
       this.personToEdit = person
-      this.createEditVisible = true
+      this.createEditModalVisible = true
     },
 
-    handleDeletePerson(personId) {
+    handleDeletePerson(person) {
       //deletes person
-      this.personToEdit = personId
-      this.deleteVisible = true
+      //person = {id: 'personId' , name: 'name lastName'}
+      this.personToEdit = person
+      this.deleteModalVisible = true
     },
 
     handleCreatePerson() {
       //create person
       this.personToEdit = null
-      this.createEditVisible = true
+      this.createEditModalVisible = true
     }
   }
 }

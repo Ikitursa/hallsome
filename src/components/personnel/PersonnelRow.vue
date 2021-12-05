@@ -40,7 +40,7 @@ export default {
       this.$emit('editPerson', this.person)
     },
     emitDeletePerson() {
-      this.$emit('deletePerson', this.person.id)
+      this.$emit('deletePerson', {id:this.person.id, name:`${this.person.name} ${this.person.lastName}`})
     }
   }
 }
