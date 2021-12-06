@@ -4,11 +4,13 @@
       <h3 class="update-card-title">{{ createEditFormTitle }}</h3>
       <div class="update-card-form">
         <form action="" id="hallUpdate">
+
           <div class="input-wrapper">
             <label class="form-input-label" for="name">Name*</label>
             <input class="update-form-input" type="text" id="name" v-model.trim="formData.name"
                    :class="{'invalid-input': !formFieldsValidation.name}">
           </div>
+
           <div class="input-wrapper dropdown">
             <label for="tableLocation" class="form-input-label">Location</label>
             <select id="tableLocation"
@@ -103,7 +105,9 @@ export default {
     },
     formIsValid() {
       //use [].some for longer checks
-      return [this.formFieldsValidation.name, this.formFieldsValidation.location, this.formFieldsValidation.seats].some
+      //it looks silly but this .some(value => !value) on a negative value returns true
+      //so it has to be negated
+      return ![this.formFieldsValidation.name, this.formFieldsValidation.location, this.formFieldsValidation.seats].some(value => !value)
     }
   },
 
