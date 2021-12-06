@@ -42,7 +42,7 @@ import {personnelEnums} from "../../enums/EntityEnums";
 import {notify} from "@kyvg/vue3-notification";
 
 export default {
-  name: "PersonnelCreateEdit",
+  name: "PersonnelCreateEditModal",
 
   props: {
     person: {
