@@ -5,43 +5,81 @@
     <div class="card list-card">
 
       <div class="card-header">
-        <button class="button-rounded button-add-new">Add new</button>
+        <button class="button-rounded button-add-new" @click="handleCreateHall">Add new</button>
       </div>
 
       <div class="items-list halls-list">
-        <HallsRow v-for="hall in halls" key:="hall.id" :hall="hall"/>
+        <HallsRow v-for="hall in halls" :key="hall.id"
+                  :hall="hall"
+                  @editHall="handleEditHall"
+                  @deleteHall="handleDeleteHall"/>
       </div>
 
     </div>
   </div>
+  <HallsCreateEditModal
+      v-if="createEditModalVisible"
+      :hall="hallToEdit"
+      @close="createEditModalVisible = false"
+      @refresh="fetchHalls"
+  />
+  <DeleteModal
+      v-if="deleteModalVisible"
+      :endpoint="hallsEnums.EDIT"
+      :itemToDelete="hallToEdit"
+      @close="deleteModalVisible = false"
+      @refresh="fetchHalls"
+  />
 </template>
 
 <script>
 import HallsRow from "../components/halls/HallsRow";
-import axios from "axios";
-import {firebaseObjectToList} from "../helpers/helpers";
+import {hallsEnums} from "../enums/EntityEnums";
+import HallsCreateEditModal from "../components/halls/HallsCreateEditModal";
+import DeleteModal from "../components/layout/DeleteModal";
 
 export default {
   name: "Halls",
-  components: {HallsRow},
+  components: {HallsCreateEditModal, HallsRow, DeleteModal},
   created() {
-    this.fetchHalls()
+    if (!this.halls) {
+      this.fetchHalls()
+    }
   },
   data: function () {
     return {
-      halls: null,
+      hallToEdit: null,
+      createEditModalVisible: false,
+      deleteModalVisible: false,
+      hallsEnums
     }
 
   },
+  computed: {
+    halls() {
+      return this.$store.getters.getHalls
+    }
+  },
   methods: {
     fetchHalls() {
-      const url = process.env.VUE_APP_BASE_URL + '/halls.json'
-      axios.get(url).then(({data, status}) => {
-            this.halls = firebaseObjectToList(data)
-          }
-      ).catch(error => {
-        console.log(error)
-      })
+      this.$store.dispatch('fetchItems', hallsEnums)
+    },
+    handleEditHall(hall) {
+      //edit hall
+      this.hallToEdit = hall
+      this.createEditModalVisible = true
+    },
+
+    handleDeleteHall(hall) {
+      //deletes hall
+      this.hallToEdit = hall
+      this.deleteModalVisible = true
+    },
+
+    handleCreateHall() {
+      //create table
+      this.hallToEdit = null
+      this.createEditModalVisible = true
     }
   }
 }
