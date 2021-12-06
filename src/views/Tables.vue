@@ -5,45 +5,82 @@
     <div class="card list-card">
 
       <div class="card-header">
-        <button class="button-rounded button-add-new">Add new</button>
+        <button class="button-rounded button-add-new" @click="handleCreateTable">Add new</button>
       </div>
 
       <div class="items-list tables-list">
-        <TablesRow v-for="table in tables" key:="table.id" :table="table"/>
+        <TablesRow v-for="table in tables" key:="table.id"
+                   :table="table"
+                   @editTable="handleEditTable"
+                   @deleteTable="handleDeleteTable"/>
       </div>
 
     </div>
   </div>
+  <TablesCreateEditModal
+      v-if="createEditModalVisible"
+      :table="tableToEdit"
+      @close="createEditModalVisible = false"
+      @refresh="fetchTables"
+  />
+  <DeleteModal
+      v-if="deleteModalVisible"
+      :endpoint="tablesEnums.EDIT"
+      :itemToDelete="tableToEdit"
+      @close="deleteModalVisible = false"
+      @refresh="fetchTables"
+  />
 </template>
 
 <script>
-import axios from "axios";
-import {firebaseObjectToList} from "../helpers/helpers";
+
 import TablesRow from "../components/tables/TablesRow";
+import {tablesEnums} from "../enums/EntityEnums";
+import TablesCreateEditModal from "../components/tables/TablesCreateEditModal";
+import DeleteModal from "../components/layout/DeleteModal";
 
 export default {
   name: "Tables",
-  components: {TablesRow},
+  components: {TablesCreateEditModal , TablesRow, DeleteModal},
   created() {
-    this.fetchTables()
+    if(!this.tables){
+      this.fetchTables()
+    }
   },
   data: function () {
     return {
-      tables: null,
+      tableToEdit: null,
+      createEditModalVisible: false,
+      deleteModalVisible: false,
+      tablesEnums
     }
 
   },
+  computed: {
+    tables() {
+      return this.$store.getters.getTables
+    }
+  },
   methods: {
     fetchTables() {
-      const url = process.env.VUE_APP_BASE_URL + '/tables.json'
-      axios.get(url).then(({data, status}) => {
+      this.$store.dispatch('fetchItems', tablesEnums)
+    },
+    handleEditTable(table) {
+      //edit table
+      this.tableToEdit = table
+      this.createEditModalVisible = true
+    },
 
-            this.tables = firebaseObjectToList(data)
-          }
-      ).catch(error => {
-        console.log(error)
-      })
+    handleDeleteTable(table) {
+      //deletes table
+      this.tableToEdit = table
+      this.deleteModalVisible = true
+    },
 
+    handleCreateTable() {
+      //create table
+      this.tableToEdit = null
+      this.createEditModalVisible = true
     }
   }
 

@@ -4,8 +4,8 @@
       <Tag :label="table.seats"/>
     </div>
     <div class="list-actions">
-      <button class="list-button">Edit</button>
-      <button class="list-button">Delete</button>
+      <button class="list-button" @click="emitEditTable">Edit</button>
+      <button class="list-button" @click="emitDeleteTable">Delete</button>
     </div>
   </div>
 </template>
@@ -14,7 +14,7 @@
 import Tag from "../layout/Tag";
 export default {
   name: "TablesRow",
-
+  emits: ['editTable','deleteTable'],
   props: {
     table:{
       required: true,
@@ -33,6 +33,13 @@ export default {
 
   computed: {},
 
-  methods: {}
+  methods: {
+    emitEditTable() {
+      this.$emit('editTable', this.table)
+    },
+    emitDeleteTable() {
+      this.$emit('deleteTable', {id:this.table.id, name:`${this.table.location} - ${this.table.name}`})
+    }
+  }
 }
 </script>
