@@ -1,22 +1,30 @@
 <template>
   <div class="backdrop">
+
     <div class="card update-card card-table-update centered-popup">
+
       <h3 class="update-card-title">{{ createEditFormTitle }}</h3>
+
       <div class="update-card-form">
         <form action="" id="hallUpdate">
 
           <div class="input-wrapper">
             <label class="form-input-label" for="name">Name*</label>
-            <input class="update-form-input" type="text" id="name" v-model.trim="formData.title"
-                   :class="{'invalid-input': !formFieldsValidation.title}">
+            <input type="text"
+                   class="update-form-input"
+                   id="name"
+                   v-model.trim="formData.title"
+                   :class="{'invalid-input': !formFieldsValidation.title}"
+            >
           </div>
 
           <div class="input-wrapper dropdown">
-            <label for="manager" class="form-input-label">Manager</label>
+            <label for="manager" class="form-input-label">Manager*</label>
             <select class="update-form-input"
                     id="manager"
                     v-model="formData.manager"
-                    :class="{'invalid-input': !formFieldsValidation.manager}">
+                    :class="{'invalid-input': !formFieldsValidation.manager}"
+            >
               <option disabled value="">Please select a manager</option>
               <option v-for="manager in managers">{{ manager.name }} {{ manager.lastName }}
               </option>
@@ -25,12 +33,15 @@
 
         </form>
       </div>
+
       <div class="update-card-actions">
-        <button @click="emitCloseCreateEdit" class="button-rounded button-cancel">Cancel</button>
-        <button
-            @click="hallSubmit"
-            class="button-rounded button-submit"
-            :disabled="!formIsValid"
+        <button class="button-rounded button-cancel"
+                @click="emitCloseCreateEdit"
+        >Cancel
+        </button>
+        <button class="button-rounded button-submit"
+                @click="hallSubmit"
+                :disabled="!formIsValid"
         >{{ submitButtonText }}
         </button>
       </div>
@@ -66,6 +77,7 @@ export default {
   },
 
   created() {
+
     if (this.hall) {
       this.fillHallData()
     }
@@ -74,9 +86,8 @@ export default {
     }
   },
 
-  components: {},
-
   computed: {
+
     createEditFormTitle() {
       return this.hall ? 'Edit hall' : 'Add new hall'
     },
@@ -84,6 +95,7 @@ export default {
     personnel() {
       return this.$store.getters.getPersonnel
     },
+
     managers() {
       return this.personnel.filter(person =>
           person.manager
@@ -101,12 +113,14 @@ export default {
 
       }
     },
+
     formIsValid() {
       return this.formFieldsValidation.title && this.formFieldsValidation.manager
     }
   },
 
   methods: {
+
     fillHallData() {
       this.formData = {...this.hall}
     },
@@ -161,6 +175,7 @@ export default {
         })
       })
     },
+
     postHall() {
       const url = process.env.VUE_APP_BASE_URL + hallsEnums.ENDPOINT
       axios.post(url, this.formData).then(() => {

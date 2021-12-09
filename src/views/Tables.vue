@@ -1,7 +1,5 @@
 <template>
-<h1>Tables</h1>
   <div class="container tables">
-
     <div class="card list-card">
 
       <div class="card-header">
@@ -9,14 +7,17 @@
       </div>
 
       <div class="items-list tables-list">
-        <TablesRow v-for="table in tables" :key="table.id"
+        <TablesRow v-for="table in tables"
+                   :key="table.id"
                    :table="table"
                    @editTable="handleEditTable"
-                   @deleteTable="handleDeleteTable"/>
+                   @deleteTable="handleDeleteTable"
+        />
       </div>
 
     </div>
   </div>
+
   <TablesCreateEditModal
       v-if="createEditModalVisible"
       :table="tableToEdit"
@@ -41,12 +42,15 @@ import DeleteModal from "../components/layout/DeleteModal";
 
 export default {
   name: "Tables",
+
   components: {TablesCreateEditModal, TablesRow, DeleteModal},
+
   created() {
-    if(!this.tables){
+    if (!this.tables) {
       this.fetchTables()
     }
   },
+
   data: function () {
     return {
       tableToEdit: null,
@@ -54,31 +58,31 @@ export default {
       deleteModalVisible: false,
       tablesEnums
     }
-
   },
+
   computed: {
     tables() {
       return this.$store.getters.getTables
     }
   },
+
   methods: {
+
     fetchTables() {
       this.$store.dispatch('fetchItems', tablesEnums)
     },
+
     handleEditTable(table) {
-      //edit table
       this.tableToEdit = table
       this.createEditModalVisible = true
     },
 
     handleDeleteTable(table) {
-      //deletes table
       this.tableToEdit = table
       this.deleteModalVisible = true
     },
 
     handleCreateTable() {
-      //create table
       this.tableToEdit = null
       this.createEditModalVisible = true
     }
@@ -86,7 +90,3 @@ export default {
 
 }
 </script>
-
-<style scoped>
-
-</style>

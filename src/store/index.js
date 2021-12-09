@@ -1,7 +1,7 @@
 import {createStore} from 'vuex'
 import axios from "axios";
 import {firebaseObjectToList} from "../helpers/helpers";
-import { notify } from "@kyvg/vue3-notification";
+import {notify} from "@kyvg/vue3-notification";
 
 
 export default createStore({
@@ -13,25 +13,31 @@ export default createStore({
     },
 
     getters: {
+
         getPersonnel(state) {
             return state.personnel
         },
+
         getHalls(state) {
             return state.halls
         },
+
         getTables(state) {
             return state.tables
         },
+
         getReservations(state) {
             return state.reservations
         },
     },
+
     mutations: {
 
         setItems(state, payload) {
             state[payload.target] = payload.items
         }
     },
+
     actions: {
 
         fetchItems({commit}, options) {
@@ -42,14 +48,6 @@ export default createStore({
                         target: options.TARGET,
                         items: firebaseObjectToList(data)
                     })
-
-                    /*notify({
-                        group: 'notifications',
-                        title: 'Success',
-                        text: `Successfully fetched ${options.TARGET}`,
-                        type: 'success',
-                    })*/
-
                 }
             ).catch(error => {
                 notify({

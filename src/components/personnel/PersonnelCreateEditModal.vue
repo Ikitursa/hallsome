@@ -1,31 +1,56 @@
 <template>
   <div class="backdrop">
+
     <div class="card update-card card-personnel-update centered-popup">
+
       <h3 class="update-card-title">{{ createEditFormTitle }}</h3>
+
       <div class="update-card-form">
+
         <form action="" id="personnelUpdate">
+
           <div class="input-wrapper">
             <label class="form-input-label" for="name">Name*</label>
-            <input class="update-form-input" type="text" id="name" v-model.trim="formData.name"
-                   :class="{'invalid-input': !formFieldsValidation.name}">
+            <input type="text"
+                   class="update-form-input"
+                   id="name"
+                   v-model.trim="formData.name"
+                   :class="{'invalid-input': !formFieldsValidation.name}"
+            >
           </div>
+
           <div class="input-wrapper">
             <label class="form-input-label" for="lastName">Last name*</label>
-            <input class="update-form-input" type="text" id="lastName" v-model.trim="formData.lastName"
-                   :class="{'invalid-input': !formFieldsValidation.lastName}">
+            <input type="text"
+                   class="update-form-input"
+                   id="lastName"
+                   v-model.trim="formData.lastName"
+                   :class="{'invalid-input': !formFieldsValidation.lastName}"
+            >
           </div>
+
           <div class="input-wrapper checkbox">
             <label class="form-input-label" for="manager">Manager</label>
-            <input class="update-form-input form-checkbox" type="checkbox" id="manager" value="frontend"
-                   v-model="formData.manager">
+            <input type="checkbox"
+                   class="update-form-input form-checkbox"
+                   id="manager"
+                   value="frontend"
+                   v-model="formData.manager"
+            >
           </div>
+
         </form>
+
       </div>
+
       <div class="update-card-actions">
-        <button @click="emitCloseCreateEdit" class="button-rounded button-cancel">Cancel</button>
+        <button class="button-rounded button-cancel"
+                @click="emitCloseCreateEdit"
+        >Cancel
+        </button>
         <button
-            @click="personSubmit"
             class="button-rounded button-submit"
+            @click="personSubmit"
             :disabled="!formIsValid"
         >{{ submitButtonText }}
         </button>
@@ -68,8 +93,6 @@ export default {
     }
   },
 
-  components: {},
-
   computed: {
 
     createEditFormTitle() {
@@ -87,6 +110,7 @@ export default {
 
       }
     },
+
     formIsValid() {
       //use [].some for longer checks
       return this.formFieldsValidation.name && this.formFieldsValidation.lastName
@@ -94,15 +118,18 @@ export default {
   },
 
   methods: {
+
     fillPersonData() {
       //works for generating a deep copy for objects without functions
       //the second is for creating a shallow copy which is alright in the current case
       //this.formData = JSON.parse(JSON.stringify(this.person))
       this.formData = {...this.person}
     },
+
     emitCloseCreateEdit() {
       this.$emit('close')
     },
+
     refreshNotifyAndClose() {
       notify({
         group: 'notifications',
@@ -145,6 +172,7 @@ export default {
         })
       })
     },
+
     postPerson() {
       const url = process.env.VUE_APP_BASE_URL + personnelEnums.ENDPOINT
       axios.post(url, this.formData).then(() => {

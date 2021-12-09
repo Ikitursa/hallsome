@@ -1,36 +1,51 @@
 <template>
   <div class="backdrop">
+
     <div class="card update-card card-table-update centered-popup">
+
       <h3 class="update-card-title">{{ createEditFormTitle }}</h3>
+
       <div class="update-card-form">
+
         <form action="" id="hallUpdate">
 
           <div class="input-wrapper">
             <label class="form-input-label" for="name">Name*</label>
-            <input class="update-form-input" type="text" id="name" v-model.trim="formData.guest"
-                   :class="{'invalid-input': !formFieldsValidation.guest}">
+            <input type="text"
+                   class="update-form-input"
+                   id="name"
+                   v-model.trim="formData.guest"
+                   :class="{'invalid-input': !formFieldsValidation.guest}"
+            >
           </div>
 
           <div class="input-wrapper">
             <label class="form-input-label" for="number-of-guests">Guest count*</label>
-            <input class="update-form-input" type="number" id="number-of-guests" v-model.number="formData.guestCount"
-                   :class="{'invalid-input': !formFieldsValidation.guestCount}">
+            <input type="number"
+                   class="update-form-input"
+                   id="number-of-guests"
+                   v-model.number="formData.guestCount"
+                   :class="{'invalid-input': !formFieldsValidation.guestCount}"
+            >
           </div>
 
           <div class="input-wrapper">
             <label class="form-input-label" for="date">Date*</label>
-            <input class="update-form-input"
-                   type="datetime-local" id="date"
+            <input type="datetime-local"
+                   class="update-form-input"
+                   id="date"
                    v-model.trim="formData.date"
-                   :class="{'invalid-input': !formFieldsValidation.date}">
+                   :class="{'invalid-input': !formFieldsValidation.date}"
+            >
           </div>
 
           <div class="input-wrapper dropdown">
-            <label for="hall" class="form-input-label">Hall</label>
+            <label for="hall" class="form-input-label">Hall*</label>
             <select class="update-form-input"
                     id="hall"
                     v-model="formData.hall"
-                    :class="{'invalid-input': !formFieldsValidation.hall}">
+                    :class="{'invalid-input': !formFieldsValidation.hall}"
+            >
               <option disabled value="">Please select a hall</option>
               <option v-for="hall in fittingHalls">{{ hall }}
               </option>
@@ -38,32 +53,41 @@
           </div>
 
           <div class="input-wrapper dropdown">
-            <label for="table" class="form-input-label">Table</label>
+            <label for="table" class="form-input-label">Table*</label>
             <select class="update-form-input"
                     id="table"
                     v-model="formData.table"
-                    :class="{'invalid-input': !formFieldsValidation.table}">
+                    :class="{'invalid-input': !formFieldsValidation.table}"
+            >
               <option disabled value="">Please select a table</option>
-              <option v-for="table in displayedTables" :value=" table.name">{{ table.name }} - ({{ table.seats }})
+              <option v-for="table in displayedTables"
+                      :value="table.name"
+              >{{ table.name }} - ({{ table.seats }})
               </option>
             </select>
           </div>
 
           <div class="input-wrapper checkbox">
             <label class="form-input-label" for="high-priority-reservation">High priority</label>
-            <input class="update-form-input form-checkbox"
-                   type="checkbox" id="high-priority-reservation" value="frontend"
+            <input type="checkbox"
+                   class="update-form-input form-checkbox"
+                   id="high-priority-reservation"
+                   value="frontend"
                    v-model="formData.highPriorityGuest"
             >
           </div>
+
         </form>
+
       </div>
+
       <div class="update-card-actions">
-        <button @click="emitCloseCreateEdit" class="button-rounded button-cancel">Cancel</button>
-        <button
-            @click="reservationSubmit"
-            class="button-rounded button-submit"
-            :disabled="!formIsValid"
+        <button class="button-rounded button-cancel"
+                @click="emitCloseCreateEdit">Cancel
+        </button>
+        <button class="button-rounded button-submit"
+                @click="reservationSubmit"
+                :disabled="!formIsValid"
         >{{ submitButtonText }}
         </button>
       </div>
@@ -113,21 +137,25 @@ export default {
   },
 
   computed: {
+
     createEditFormTitle() {
       return this.reservation ? 'Edit reservation' : 'Add new reservation'
     },
+
     tables() {
       return this.$store.getters.getTables
     },
 
     fittingHalls() {
-      return [...new Set(this.fittingTables.map(value => value.location))];
+      return [...new Set(this.fittingTables.map(value => value.location))]
     },
+
     fittingTables() {
       return this.tables ? this.tables.filter(table =>
           table.seats >= this.formData.guestCount
       ) : []
     },
+
     displayedTables() {
       return this.fittingTables.filter(table =>
           table.location === this.formData.hall
@@ -147,6 +175,7 @@ export default {
         date: !!this.formData.date,
       }
     },
+
     formIsValid() {
       return ![
         this.formFieldsValidation.guest,
@@ -213,6 +242,7 @@ export default {
         })
       })
     },
+
     postReservation() {
       const url = process.env.VUE_APP_BASE_URL + reservationsEnums.ENDPOINT
       axios.post(url, this.formData).then(() => {

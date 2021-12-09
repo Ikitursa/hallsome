@@ -1,42 +1,56 @@
 <template>
   <div class="backdrop">
+
     <div class="card update-card card-table-update centered-popup">
+
       <h3 class="update-card-title">{{ createEditFormTitle }}</h3>
+
       <div class="update-card-form">
         <form action="" id="hallUpdate">
 
           <div class="input-wrapper">
             <label class="form-input-label" for="name">Name*</label>
-            <input class="update-form-input" type="text" id="name" v-model.trim="formData.name"
-                   :class="{'invalid-input': !formFieldsValidation.name}">
+            <input type="text"
+                   class="update-form-input"
+                   id="name"
+                   v-model.trim="formData.name"
+                   :class="{'invalid-input': !formFieldsValidation.name}"
+            >
           </div>
 
           <div class="input-wrapper dropdown">
-            <label for="tableLocation" class="form-input-label">Location</label>
+            <label for="tableLocation" class="form-input-label">Location*</label>
             <select class="update-form-input"
                     id="tableLocation"
                     v-model="formData.location"
-                    :class="{'invalid-input': !formFieldsValidation.location}">
+                    :class="{'invalid-input': !formFieldsValidation.location}"
+            >
               <option disabled value="">Please select a hall</option>
-              <option
-                  v-for="hall in halls">{{ hall.title }}
+              <option v-for="hall in halls">{{ hall.title }}
               </option>
             </select>
           </div>
+
           <div class="input-wrapper">
             <label class="form-input-label" for="number-of-seats">Seats*</label>
-            <input class="update-form-input" type="number" id="number-of-seats" v-model.number="formData.seats"
-                   :class="{'invalid-input': !formFieldsValidation.seats}">
+            <input type="number"
+                   class="update-form-input"
+                   id="number-of-seats"
+                   v-model.number="formData.seats"
+                   :class="{'invalid-input': !formFieldsValidation.seats}"
+            >
           </div>
 
         </form>
       </div>
+
       <div class="update-card-actions">
-        <button @click="emitCloseCreateEdit" class="button-rounded button-cancel">Cancel</button>
-        <button
-            @click="tableSubmit"
-            class="button-rounded button-submit"
-            :disabled="!formIsValid"
+        <button @click="emitCloseCreateEdit"
+                class="button-rounded button-cancel">Cancel
+        </button>
+        <button class="button-rounded button-submit"
+                @click="tableSubmit"
+                :disabled="!formIsValid"
         >{{ submitButtonText }}
         </button>
       </div>
@@ -81,8 +95,6 @@ export default {
     }
   },
 
-  components: {},
-
   computed: {
 
     createEditFormTitle() {
@@ -105,6 +117,7 @@ export default {
 
       }
     },
+
     formIsValid() {
       //use [].some for longer checks
       //it looks silly but this .some(value => !value) on a negative value returns true
@@ -114,6 +127,7 @@ export default {
   },
 
   methods: {
+
     fillTableData() {
       this.formData = {...this.table}
     },
@@ -168,6 +182,7 @@ export default {
         })
       })
     },
+
     postTable() {
       const url = process.env.VUE_APP_BASE_URL + tablesEnums.ENDPOINT
       axios.post(url, this.formData).then(() => {

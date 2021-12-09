@@ -5,8 +5,8 @@
       <h3 class="update-card-title update-card-form">{{ deleteModalText }}</h3>
 
       <div class="update-card-actions">
-        <button @click="emitCloseDelete" class="button-rounded button-cancel">Cancel</button>
-        <button @click="handleDelete" class="button-rounded button-submit">Delete</button>
+        <button class="button-rounded button-cancel" @click="emitCloseDelete">Cancel</button>
+        <button class="button-rounded button-submit" @click="handleDelete">Delete</button>
       </div>
 
     </div>
@@ -15,7 +15,6 @@
 
 <script>
 import axios from "axios";
-import {personnelEnums} from "../../enums/EntityEnums";
 import {notify} from "@kyvg/vue3-notification";
 
 export default {
@@ -26,16 +25,12 @@ export default {
       required: true,
       type: Object,
     },
+
     endpoint: {
       required: true,
       type: String,
     },
   },
-
-  created() {
-  },
-
-  components: {},
 
   computed: {
 
@@ -45,9 +40,11 @@ export default {
   },
 
   methods: {
+
     emitCloseDelete() {
       this.$emit('close')
     },
+
     refreshNotifyAndClose() {
       notify({
         group: 'notifications',
@@ -58,7 +55,6 @@ export default {
       this.$emit('refresh')
       this.emitCloseDelete()
     },
-
 
     handleDelete() {
       const url = process.env.VUE_APP_BASE_URL + this.endpoint + this.itemToDelete.id + '.json'
