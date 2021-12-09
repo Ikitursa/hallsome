@@ -6,7 +6,7 @@
       <div class="upcoming-reservation-table">{{ reservation.hall }} - {{ reservation.table }}</div>
     </div>
     <div class="upcoming-reservation-hover-actions">
-      <div class="reservation-actions">
+      <div class="card reservation-actions">
         <button class="reservation-button" @click="emitEditReservation">Update</button>
         <button class="reservation-button" @click="emitDeleteReservation">Delete</button>
       </div>

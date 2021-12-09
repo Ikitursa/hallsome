@@ -13,7 +13,8 @@
 
           <div class="input-wrapper dropdown">
             <label for="manager" class="form-input-label">Manager</label>
-            <select id="manager"
+            <select class="update-form-input"
+                    id="manager"
                     v-model="formData.manager"
                     :class="{'invalid-input': !formFieldsValidation.manager}">
               <option disabled value="">Please select a manager</option>

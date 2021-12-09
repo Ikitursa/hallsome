@@ -13,12 +13,14 @@
 
           <div class="input-wrapper dropdown">
             <label for="tableLocation" class="form-input-label">Location</label>
-            <select id="tableLocation"
+            <select class="update-form-input"
+                    id="tableLocation"
                     v-model="formData.location"
                     :class="{'invalid-input': !formFieldsValidation.location}">
               <option disabled value="">Please select a hall</option>
               <option
-                  v-for="hall in halls">{{ hall.title }}</option>
+                  v-for="hall in halls">{{ hall.title }}
+              </option>
             </select>
           </div>
           <div class="input-wrapper">
