@@ -57,6 +57,7 @@
     opacity: 0;
     transition: opacity 0.3s;
     justify-content: space-around;
+    box-shadow: none;
 
     &:hover{
       opacity: 1;
