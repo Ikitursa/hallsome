@@ -9,7 +9,7 @@
       </div>
 
       <div class="items-list tables-list">
-        <TablesRow v-for="table in tables" key:="table.id"
+        <TablesRow v-for="table in tables" :key="table.id"
                    :table="table"
                    @editTable="handleEditTable"
                    @deleteTable="handleDeleteTable"/>
@@ -41,7 +41,7 @@ import DeleteModal from "../components/layout/DeleteModal";
 
 export default {
   name: "Tables",
-  components: {TablesCreateEditModal , TablesRow, DeleteModal},
+  components: {TablesCreateEditModal, TablesRow, DeleteModal},
   created() {
     if(!this.tables){
       this.fetchTables()

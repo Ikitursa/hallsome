@@ -25,7 +25,7 @@
           </div>
           <div class="input-wrapper">
             <label class="form-input-label" for="number-of-seats">Seats*</label>
-            <input class="update-form-input" type="number" id="number-of-seats" v-model.trim="formData.seats"
+            <input class="update-form-input" type="number" id="number-of-seats" v-model.number="formData.seats"
                    :class="{'invalid-input': !formFieldsValidation.seats}">
           </div>
 
