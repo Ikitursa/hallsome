@@ -2,12 +2,17 @@
   <h1>Reservations</h1>
   <div class="container reservations">
     <div class="wrapper-reservation-add-new">
-      <button class="button-rounded button-add-new">Add new</button>
+      <button class="button-rounded button-add-new" @click="handleCreateReservation">Add new</button>
     </div>
     <h3 class="reservations-header">Upcoming reservations</h3>
     <div class="upcoming-reservations">
 
-      <UpcomingReservationCard v-for="reservation in reservations" key:="reservation.id" :reservation="reservation"/>
+      <UpcomingReservationCard v-for="reservation in upcomingReservations"
+                               :key="reservation.id"
+                               :reservation="reservation"
+                               @editReservation="handleEditReservation"
+                               @deleteReservation="handleDeleteReservation"
+      />
 
     </div>
 
@@ -16,45 +21,94 @@
     <div class="card list-card">
       <div class="items-list past-reservations-list">
 
-        <ReservationRow v-for="reservation in reservations" key:="reservation.id" :reservation="reservation"/>
+        <ReservationRow v-for="reservation in pastReservations"
+                        :key="reservation.id"
+                        :reservation="reservation"
+                        @deleteReservation="handleDeleteReservation"
+        />
 
       </div>
 
     </div>
   </div>
+  <ReservationCreateEditModal
+  v-if="createEditModalVisible"
+  :reservation="reservationToEdit"
+  @close="createEditModalVisible = false"
+  @refresh="fetchReservations"
+  />
+
+  <DeleteModal
+      v-if="deleteModalVisible"
+      :endpoint="reservationsEnums.EDIT"
+      :itemToDelete="reservationToEdit"
+      @close="deleteModalVisible = false"
+      @refresh="fetchReservations"
+  />
 </template>
 
 <script>
 
-
-import axios from "axios";
-import {firebaseObjectToList} from "../helpers/helpers";
 import UpcomingReservationCard from "../components/reservations/UpcomingReservationCard";
 import ReservationRow from "../components/reservations/ReservationRow";
+import {reservationsEnums} from "../enums/EntityEnums";
+import ReservationCreateEditModal from "../components/reservations/ReservationCreateEditModal";
+import DeleteModal from "../components/layout/DeleteModal";
+import { parseISO, isFuture } from 'date-fns'
 
 export default {
   name: 'Reservations',
-  components: {ReservationRow, UpcomingReservationCard},
+  components: {ReservationCreateEditModal, ReservationRow, UpcomingReservationCard, DeleteModal},
   created() {
-    this.fetchReservations()
+    if(!this.reservations){
+      this.fetchReservations()
+    }
   },
   data: function () {
     return {
-      reservations: null,
+      reservationToEdit: null,
+      createEditModalVisible: false,
+      deleteModalVisible: false,
+      reservationsEnums
     }
+  },
+  computed: {
+    reservations() {
+      return this.$store.getters.getReservations
+    },
+    upcomingReservations() {
+      return this.reservations ? this.reservations.filter(reservation =>
+          isFuture(parseISO(reservation.date))
+      ) : []
+    },
+    pastReservations() {
 
+      return this.reservations ? this.reservations.filter(reservation =>
+          !isFuture(parseISO(reservation.date))
+      ) : []
+    },
   },
   methods: {
     fetchReservations() {
-      const url = process.env.VUE_APP_BASE_URL + '/reservations.json'
-      axios.get(url).then(({data, status}) => {
+      this.$store.dispatch('fetchItems', reservationsEnums
+      )
+    },
+    handleEditReservation(reservation) {
+      //edit reservation
+      this.reservationToEdit = reservation
+      this.createEditModalVisible = true
+    },
 
-            this.reservations = firebaseObjectToList(data)
-          }
-      ).catch(error => {
-        console.log(error)
-      })
+    handleDeleteReservation(reservation) {
+      //deletes reservation
+      this.reservationToEdit = reservation
+      this.deleteModalVisible = true
+    },
 
+    handleCreateReservation() {
+      //create reservation
+      this.reservationToEdit = null
+      this.createEditModalVisible = true
     }
   }
 }
