@@ -26,7 +26,7 @@
   />
   <DeleteModal
       v-if="deleteModalVisible"
-      :endpoint="tablesEnums.EDIT"
+      :endpoint="tablesConfig.EDIT"
       :itemToDelete="tableToEdit"
       @close="deleteModalVisible = false"
       @refresh="fetchTables"
@@ -36,7 +36,7 @@
 <script>
 
 import TablesRow from "../components/tables/TablesRow";
-import {tablesEnums} from "../enums/EntityEnums";
+import {tablesConfig} from "../config/EntityConfig";
 import TablesCreateEditModal from "../components/tables/TablesCreateEditModal";
 import DeleteModal from "../components/layout/DeleteModal";
 
@@ -56,7 +56,7 @@ export default {
       tableToEdit: null,
       createEditModalVisible: false,
       deleteModalVisible: false,
-      tablesEnums
+      tablesConfig
     }
   },
 
@@ -69,7 +69,7 @@ export default {
   methods: {
 
     fetchTables() {
-      this.$store.dispatch('fetchItems', tablesEnums)
+      this.$store.dispatch('fetchItems', tablesConfig)
     },
 
     handleEditTable(table) {

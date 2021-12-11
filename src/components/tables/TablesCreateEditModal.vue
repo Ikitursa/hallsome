@@ -62,7 +62,7 @@
 
 <script>
 import axios from "axios";
-import {hallsEnums, tablesEnums} from "../../enums/EntityEnums";
+import {hallsConfig, tablesConfig} from "../../config/EntityConfig";
 import {notify} from "@kyvg/vue3-notification";
 
 export default {
@@ -133,7 +133,7 @@ export default {
     },
 
     fetchHalls() {
-      this.$store.dispatch('fetchItems', hallsEnums)
+      this.$store.dispatch('fetchItems', hallsConfig)
     },
 
     emitCloseCreateEdit() {
@@ -161,7 +161,7 @@ export default {
       } else {
         notify({
           group: 'notifications',
-          title: `The ${tablesEnums.TARGET} form data is invalid`,
+          title: `The ${tablesConfig.TARGET} form data is invalid`,
           text: 'Please check your inputs',
           type: 'error',
         })
@@ -169,14 +169,14 @@ export default {
     },
 
     patchTable() {
-      const url = process.env.VUE_APP_BASE_URL + tablesEnums.EDIT + this.table.id + '.json'
+      const url = process.env.VUE_APP_BASE_URL + tablesConfig.EDIT + this.table.id + '.json'
       axios.patch(url, this.formData).then(() => {
             this.refreshNotifyAndClose()
           }
       ).catch(error => {
         notify({
           group: 'notifications',
-          title: `The ${tablesEnums.TARGET} form data could not be updated`,
+          title: `The ${tablesConfig.TARGET} form data could not be updated`,
           text: `${error}`,
           type: 'error',
         })
@@ -184,14 +184,14 @@ export default {
     },
 
     postTable() {
-      const url = process.env.VUE_APP_BASE_URL + tablesEnums.ENDPOINT
+      const url = process.env.VUE_APP_BASE_URL + tablesConfig.ENDPOINT
       axios.post(url, this.formData).then(() => {
             this.refreshNotifyAndClose()
           }
       ).catch(error => {
         notify({
           group: 'notifications',
-          title: `The ${tablesEnums.TARGET} form data could not be submitted`,
+          title: `The ${tablesConfig.TARGET} form data could not be submitted`,
           text: `${error}`,
           type: 'error',
         })

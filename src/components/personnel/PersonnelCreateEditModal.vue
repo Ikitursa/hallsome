@@ -63,7 +63,7 @@
 
 <script>
 import axios from "axios";
-import {personnelEnums} from "../../enums/EntityEnums";
+import {personnelConfig} from "../../config/EntityConfig";
 import {notify} from "@kyvg/vue3-notification";
 
 export default {
@@ -151,7 +151,7 @@ export default {
       } else {
         notify({
           group: 'notifications',
-          title: `The ${personnelEnums.TARGET} form data is invalid`,
+          title: `The ${personnelConfig.TARGET} form data is invalid`,
           text: 'Please check your inputs',
           type: 'error',
         })
@@ -159,14 +159,14 @@ export default {
     },
 
     patchPerson() {
-      const url = process.env.VUE_APP_BASE_URL + personnelEnums.EDIT + this.person.id + '.json'
+      const url = process.env.VUE_APP_BASE_URL + personnelConfig.EDIT + this.person.id + '.json'
       axios.patch(url, this.formData).then(() => {
             this.refreshNotifyAndClose()
           }
       ).catch(error => {
         notify({
           group: 'notifications',
-          title: `The ${personnelEnums.TARGET} form data could not be updated`,
+          title: `The ${personnelConfig.TARGET} form data could not be updated`,
           text: `${error}`,
           type: 'error',
         })
@@ -174,14 +174,14 @@ export default {
     },
 
     postPerson() {
-      const url = process.env.VUE_APP_BASE_URL + personnelEnums.ENDPOINT
+      const url = process.env.VUE_APP_BASE_URL + personnelConfig.ENDPOINT
       axios.post(url, this.formData).then(() => {
             this.refreshNotifyAndClose()
           }
       ).catch(error => {
         notify({
           group: 'notifications',
-          title: `The ${personnelEnums.TARGET} form data could not be submitted`,
+          title: `The ${personnelConfig.TARGET} form data could not be submitted`,
           text: `${error}`,
           type: 'error',
         })

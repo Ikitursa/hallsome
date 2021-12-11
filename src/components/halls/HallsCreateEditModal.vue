@@ -53,7 +53,7 @@
 
 <script>
 import axios from "axios";
-import {hallsEnums, personnelEnums} from "../../enums/EntityEnums";
+import {hallsConfig, personnelConfig} from "../../config/EntityConfig";
 import {notify} from "@kyvg/vue3-notification";
 
 export default {
@@ -126,7 +126,7 @@ export default {
     },
 
     fetchPersonnel() {
-      this.$store.dispatch('fetchItems', personnelEnums)
+      this.$store.dispatch('fetchItems', personnelConfig)
     },
 
     emitCloseCreateEdit() {
@@ -154,7 +154,7 @@ export default {
       } else {
         notify({
           group: 'notifications',
-          title: `The ${hallsEnums.TARGET} form data is invalid`,
+          title: `The ${hallsConfig.TARGET} form data is invalid`,
           text: 'Please check your inputs',
           type: 'error',
         })
@@ -162,14 +162,14 @@ export default {
     },
 
     patchHall() {
-      const url = process.env.VUE_APP_BASE_URL + hallsEnums.EDIT + this.hall.id + '.json'
+      const url = process.env.VUE_APP_BASE_URL + hallsConfig.EDIT + this.hall.id + '.json'
       axios.patch(url, this.formData).then(() => {
             this.refreshNotifyAndClose()
           }
       ).catch(error => {
         notify({
           group: 'notifications',
-          title: `The ${hallsEnums.TARGET} form data could not be updated`,
+          title: `The ${hallsConfig.TARGET} form data could not be updated`,
           text: `${error}`,
           type: 'error',
         })
@@ -177,14 +177,14 @@ export default {
     },
 
     postHall() {
-      const url = process.env.VUE_APP_BASE_URL + hallsEnums.ENDPOINT
+      const url = process.env.VUE_APP_BASE_URL + hallsConfig.ENDPOINT
       axios.post(url, this.formData).then(() => {
             this.refreshNotifyAndClose()
           }
       ).catch(error => {
         notify({
           group: 'notifications',
-          title: `The ${hallsEnums.TARGET} form data could not be submitted`,
+          title: `The ${hallsConfig.TARGET} form data could not be submitted`,
           text: `${error}`,
           type: 'error',
         })

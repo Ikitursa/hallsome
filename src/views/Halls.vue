@@ -27,7 +27,7 @@
   />
   <DeleteModal
       v-if="deleteModalVisible"
-      :endpoint="hallsEnums.EDIT"
+      :endpoint="hallsConfig.EDIT"
       :itemToDelete="hallToEdit"
       @close="deleteModalVisible = false"
       @refresh="fetchHalls"
@@ -37,7 +37,7 @@
 
 <script>
 import HallsRow from "../components/halls/HallsRow";
-import {hallsEnums} from "../enums/EntityEnums";
+import {hallsConfig} from "../config/EntityConfig";
 import HallsCreateEditModal from "../components/halls/HallsCreateEditModal";
 import DeleteModal from "../components/layout/DeleteModal";
 
@@ -57,7 +57,7 @@ export default {
       hallToEdit: null,
       createEditModalVisible: false,
       deleteModalVisible: false,
-      hallsEnums
+      hallsConfig
     }
   },
 
@@ -71,7 +71,7 @@ export default {
   methods: {
 
     fetchHalls() {
-      this.$store.dispatch('fetchItems', hallsEnums)
+      this.$store.dispatch('fetchItems', hallsConfig)
     },
 
     handleEditHall(hall) {

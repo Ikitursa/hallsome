@@ -1,25 +1,25 @@
-const personnelEnums = {
+const personnelConfig = {
     TARGET:'personnel',
     ENDPOINT:'/personnel.json',
     EDIT:'/personnel/'
 }
-const hallsEnums = {
+const hallsConfig = {
     TARGET:'halls',
     ENDPOINT:'/halls.json',
     EDIT:'/halls/'
 }
-const tablesEnums = {
+const tablesConfig = {
     TARGET:'tables',
     ENDPOINT:'/tables.json',
     EDIT:'/tables/'
 }
-const reservationsEnums = {
+const reservationsConfig = {
     TARGET:'reservations',
     ENDPOINT:'/reservations.json',
     EDIT:'/reservations/'
 }
 
-export {personnelEnums}
-export {hallsEnums}
-export {tablesEnums}
-export {reservationsEnums}
+export {personnelConfig}
+export {hallsConfig}
+export {tablesConfig}
+export {reservationsConfig}

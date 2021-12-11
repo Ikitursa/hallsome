@@ -100,7 +100,7 @@
 <script>
 
 import axios from "axios";
-import {tablesEnums, reservationsEnums} from "../../enums/EntityEnums";
+import {tablesConfig, reservationsConfig} from "../../config/EntityConfig";
 import {notify} from "@kyvg/vue3-notification";
 
 export default {
@@ -193,7 +193,7 @@ export default {
     },
 
     fetchTables() {
-      this.$store.dispatch('fetchItems', tablesEnums)
+      this.$store.dispatch('fetchItems', tablesConfig)
     },
 
     emitCloseCreateEdit() {
@@ -221,7 +221,7 @@ export default {
       } else {
         notify({
           group: 'notifications',
-          title: `The ${reservationsEnums.TARGET} form data is invalid`,
+          title: `The ${reservationsConfig.TARGET} form data is invalid`,
           text: 'Please check your inputs',
           type: 'error',
         })
@@ -229,14 +229,14 @@ export default {
     },
 
     patchReservation() {
-      const url = process.env.VUE_APP_BASE_URL + reservationsEnums.EDIT + this.reservation.id + '.json'
+      const url = process.env.VUE_APP_BASE_URL + reservationsConfig.EDIT + this.reservation.id + '.json'
       axios.patch(url, this.formData).then(() => {
             this.refreshNotifyAndClose()
           }
       ).catch(error => {
         notify({
           group: 'notifications',
-          title: `The ${reservationsEnums.TARGET} form data could not be updated`,
+          title: `The ${reservationsConfig.TARGET} form data could not be updated`,
           text: `${error}`,
           type: 'error',
         })
@@ -244,14 +244,14 @@ export default {
     },
 
     postReservation() {
-      const url = process.env.VUE_APP_BASE_URL + reservationsEnums.ENDPOINT
+      const url = process.env.VUE_APP_BASE_URL + reservationsConfig.ENDPOINT
       axios.post(url, this.formData).then(() => {
             this.refreshNotifyAndClose()
           }
       ).catch(error => {
         notify({
           group: 'notifications',
-          title: `The ${reservationsEnums.TARGET} form data could not be submitted`,
+          title: `The ${reservationsConfig.TARGET} form data could not be submitted`,
           text: `${error}`,
           type: 'error',
         })

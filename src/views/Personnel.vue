@@ -27,7 +27,7 @@
   />
   <DeleteModal
       v-if="deleteModalVisible"
-      :endpoint="personnelEnums.EDIT"
+      :endpoint="personnelConfig.EDIT"
       :itemToDelete="personToEdit"
       @close="deleteModalVisible = false"
       @refresh="fetchPersonnel"
@@ -37,7 +37,7 @@
 
 <script>
 import PersonnelRow from "../components/personnel/PersonnelRow"
-import {personnelEnums} from "../enums/EntityEnums";
+import {personnelConfig} from "../config/EntityConfig";
 import PersonnelCreateEditModal from "../components/personnel/PersonnelCreateEditModal";
 import DeleteModal from "../components/layout/DeleteModal";
 
@@ -57,7 +57,7 @@ export default {
       personToEdit: null,
       createEditModalVisible: false,
       deleteModalVisible: false,
-      personnelEnums
+      personnelConfig
     }
   },
 
@@ -70,7 +70,7 @@ export default {
   methods: {
 
     fetchPersonnel() {
-      this.$store.dispatch('fetchItems', personnelEnums)
+      this.$store.dispatch('fetchItems', personnelConfig)
     },
 
     handleEditPerson(person) {

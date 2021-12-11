@@ -41,7 +41,7 @@
 
   <DeleteModal
       v-if="deleteModalVisible"
-      :endpoint="reservationsEnums.EDIT"
+      :endpoint="reservationsConfig.EDIT"
       :itemToDelete="reservationToEdit"
       @close="deleteModalVisible = false"
       @refresh="fetchReservations"
@@ -52,7 +52,7 @@
 
 import UpcomingReservationCard from "../components/reservations/UpcomingReservationCard";
 import ReservationRow from "../components/reservations/ReservationRow";
-import {reservationsEnums} from "../enums/EntityEnums";
+import {reservationsConfig} from "../config/EntityConfig";
 import ReservationCreateEditModal from "../components/reservations/ReservationCreateEditModal";
 import DeleteModal from "../components/layout/DeleteModal";
 import {parseISO, isFuture} from 'date-fns'
@@ -73,7 +73,7 @@ export default {
       reservationToEdit: null,
       createEditModalVisible: false,
       deleteModalVisible: false,
-      reservationsEnums
+      reservationsConfig
     }
   },
 
@@ -100,7 +100,7 @@ export default {
   methods: {
 
     fetchReservations() {
-      this.$store.dispatch('fetchItems', reservationsEnums
+      this.$store.dispatch('fetchItems', reservationsConfig
       )
     },
 
