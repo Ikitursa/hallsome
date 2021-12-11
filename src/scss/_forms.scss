@@ -1,0 +1,78 @@
+.update-card{
+  padding:12px;
+  @media screen and (min-width: 425px) {
+    width: 360px;
+    margin: auto;
+  }
+  @media screen and (min-width: 768px) {
+    width: 520px;
+    margin: auto;
+  }
+  .update-card-title{
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    padding-bottom: 16px;
+    font-weight: 500;
+  }
+
+  .update-card-form{
+    border-bottom: 1px dashed $grey;
+  }
+
+  .input-wrapper{
+    margin: 12px 0;
+    .form-input-label{
+      display: block;
+      color: $darkGreyAlt;
+      font-size: 14px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .update-form-input{
+      width: 100%;
+      height: 30px;
+      border-radius: 4px;
+      border: 1px solid $grey;
+      padding: 0 10px;
+      &.invalid-input{
+        border-color: $red;
+      }
+      &:focus {
+        border: 1px solid $darkGreyAlt;
+        background-color: white;
+        outline: none;
+      }
+      option{
+        padding: 0;
+      }
+    }
+    .form-checkbox{
+      width: 16px;
+      height:16px;
+      margin: 0 20px;
+    }
+  }
+  .update-card-actions{
+    display: flex;
+    margin-top: 10px;
+    gap:10px;
+    button{
+      flex-grow: 1;
+      padding: 6px;
+    }
+    .button-cancel{
+      background-color: $lightGrey;
+    }
+    .button-submit{
+      background-color: $pink;
+      color: white;
+      &:disabled{
+        background-color: $pinkLite;
+        opacity: 0.8;
+        cursor: default;
+      }
+    }
+  }
+}
+
+
