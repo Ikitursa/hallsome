@@ -257,6 +257,20 @@ export default {
         })
       })
     }
+  },
+
+  watch: {
+    displayedTables(newVal) {
+      if (!newVal.some(table => table.name === this.formData.table)) {
+        this.formData.table = ''
+      }
+    },
+
+    fittingHalls(newVal) {
+      if (!newVal.some(hall => hall === this.formData.hall)) {
+        this.formData.hall = ''
+      }
+    }
   }
 }
 </script>
